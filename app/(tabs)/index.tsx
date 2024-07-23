@@ -3,10 +3,19 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import StartGameScreen from "@/screens/StartGameScreens";
+import { useState } from "react";
+import GameScreen from "@/screens/GameScreen";
 
 export default function HomeScreen() {
-  let isFlag = <StartGameScreen />;
+  const [inputNumber, setInputNumber] = useState();
 
+  function pickerNumber(number: any) {
+    setInputNumber(number);
+  }
+  let isFlag = <StartGameScreen pickerNumber={pickerNumber} />;
+  if (inputNumber) {
+    isFlag = <GameScreen />;
+  }
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -23,7 +32,7 @@ export default function HomeScreen() {
       >
         <Text style={styles.title}>Hello World!</Text>
         <StatusBar style="auto" />
-        <StartGameScreen />
+        {isFlag}
       </LinearGradient>
     </ParallaxScrollView>
   );

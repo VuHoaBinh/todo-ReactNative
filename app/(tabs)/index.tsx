@@ -5,6 +5,8 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import StartGameScreen from "@/screens/StartGameScreens";
 
 export default function HomeScreen() {
+  let isFlag = <StartGameScreen />;
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}

@@ -1,16 +1,29 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  GestureResponderEvent,
+  ViewStyle,
+  TextStyle,
+} from "react-native";
 
-function PrimaryButton({ children }) {
-  function pressedButton() {
-    console.log("hahah");
-  }
+type PrimaryButtonProps = {
+  children: React.ReactNode;
+  onPress: (event: GestureResponderEvent) => void;
+};
+
+function PrimaryButton({ children, onPress }: PrimaryButtonProps) {
+  // function pressedButton() {
+  //   console.log("hahah");
+  // }
   return (
     <View>
       <Pressable
         style={({ pressed }) =>
           pressed ? [styles.button, styles.press] : styles.button
         }
-        onPress={pressedButton}
+        onPress={onPress}
         android_ripple={{ color: "green" }}
       >
         <Text style={styles.title}>{children}</Text>

@@ -1,5 +1,6 @@
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
+
 function Title({ children }: any) {
   return <Text style={styles.container}>{children}</Text>;
 }

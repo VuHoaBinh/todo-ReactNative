@@ -5,17 +5,29 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import StartGameScreen from "@/screens/StartGameScreens";
 import { useState } from "react";
 import GameScreen from "@/screens/GameScreen";
+import OverGameScreen from "@/screens/OverGameScreen";
 
 export default function HomeScreen() {
   const [inputNumber, setInputNumber] = useState();
-
+  const [isGameOver, setIsGameOver] = useState(true);
   function pickerNumber(number: any) {
     setInputNumber(number);
+    setIsGameOver(false);
   }
   let isFlag = <StartGameScreen pickerNumber={pickerNumber} />;
-  if (inputNumber) {
-    isFlag = <GameScreen />;
+  function gameOverHandler() {
+    setIsGameOver(true);
   }
+  if (inputNumber) {
+    isFlag = (
+      <GameScreen inputNumber={inputNumber} onGameOver={gameOverHandler} />
+    );
+  }
+
+  if (isGameOver && inputNumber) {
+    isFlag = <OverGameScreen />;
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}

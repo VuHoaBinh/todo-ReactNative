@@ -3,6 +3,7 @@ import Title from "@/components/buttons/Title";
 import { useState, useEffect } from "react";
 import NumberGuess from "@/components/buttons/NumberGuess";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
+import { Ionicons } from "@expo/vector-icons";
 
 let minBoundary = 1;
 let maxBoundary = 100;
@@ -54,10 +55,10 @@ function GameScreen({ number, gameOver }) {
       <Text>Game Screen</Text>
       <View>
         <PrimaryButton onPress={nextNumber.bind(this, "greater")}>
-          +
+          <Ionicons name="add" size={24} color="white" />
         </PrimaryButton>
         <PrimaryButton onPress={nextNumber.bind(this, "lower")}>
-          -
+          <Ionicons name="remove" size={24} color="white" />
         </PrimaryButton>
       </View>
     </View>

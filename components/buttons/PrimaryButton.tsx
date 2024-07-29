@@ -6,6 +6,7 @@ import {
   GestureResponderEvent,
   ViewStyle,
   TextStyle,
+  Dimensions,
 } from "react-native";
 
 type PrimaryButtonProps = {
@@ -33,11 +34,11 @@ function PrimaryButton({ children, onPress }: PrimaryButtonProps) {
 }
 
 export default PrimaryButton;
-
+const fixSize = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   title: {
     color: "#FFFFFF",
-    backgroundColor: "red",
+    backgroundColor: fixSize < 380 ? "yellow" : "red",
     borderRadius: 4,
     shadowColor: "white",
     padding: 10,

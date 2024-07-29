@@ -1,9 +1,32 @@
 import { useState } from "react";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
-import { TextInput, View, StyleSheet, Alert } from "react-native";
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 
 function StartGameScreen({ pickerNumber }: any) {
   const [enterNumber, setEnterNumber] = useState("");
+  const { width, height } = useWindowDimensions();
+
+  let widthSize = 300;
+
+  let heightSize = 300;
+
+  if (width < 380) {
+    widthSize = 150;
+  }
+
+  if (height < 480) {
+    heightSize = 80;
+  }
+
+  let styleImage = { width: widthSize, height: heightSize };
 
   function onChangeEnterNumberHandle(enterNumber: string) {
     setEnterNumber(enterNumber);
@@ -32,21 +55,25 @@ function StartGameScreen({ pickerNumber }: any) {
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCapitalize="none"
-        autoCorrect={false}
-        onChangeText={onChangeEnterNumberHandle}
-        value={enterNumber}
-      />
-      <View style={styles.button}>
-        <PrimaryButton onPress={submitEnterNumber}>Confirm</PrimaryButton>
-        <PrimaryButton onPress={onResetNumberHandle}>Reset</PrimaryButton>
-      </View>
-    </View>
+    <ScrollView>
+      <KeyboardAvoidingView behavior="position">
+        <View style={[styles.container, styleImage]}>
+          <TextInput
+            style={styles.textInput}
+            maxLength={2}
+            keyboardType="number-pad"
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={onChangeEnterNumberHandle}
+            value={enterNumber}
+          />
+          <View style={styles.button}>
+            <PrimaryButton onPress={submitEnterNumber}>Confirm</PrimaryButton>
+            <PrimaryButton onPress={onResetNumberHandle}>Reset</PrimaryButton>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 

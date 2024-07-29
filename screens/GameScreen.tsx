@@ -1,14 +1,16 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import Title from "@/components/buttons/Title";
 import { useState, useEffect } from "react";
 import NumberGuess from "@/components/buttons/NumberGuess";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { Ionicons } from "@expo/vector-icons";
+import { FlatList } from "react-native-gesture-handler";
+// import {} fromuse
 
-let minBoundary = 1;
-let maxBoundary = 100;
-
-function GameScreen({ number, gameOver }) {
+function GameScreen({ number, gameOver }: any) {
+  const [enterList, setEnterList] = useState([]);
+  let minBoundary = 1;
+  let maxBoundary = 100;
   let initialScreen = randomNumber(minBoundary, maxBoundary, number);
   const [currentScreenGuess, setCurrentScreenGuess] = useState(initialScreen);
 
@@ -40,6 +42,11 @@ function GameScreen({ number, gameOver }) {
       currentScreenGuess
     );
     setCurrentScreenGuess(newNumberGuess);
+
+    setEnterList((currentList) => [
+      ...currentList,
+      { text: `Guess: ${currentScreenGuess}`, id: Math.random().toString() },
+    ]);
   }
 
   useEffect(() => {
@@ -60,6 +67,14 @@ function GameScreen({ number, gameOver }) {
         <PrimaryButton onPress={nextNumber.bind(this, "lower")}>
           <Ionicons name="remove" size={24} color="white" />
         </PrimaryButton>
+      </View>
+      <View>
+        <FlatList
+          data={enterList}
+          renderItem={(item) => {
+            return <Text>{item.item.text}</Text>;
+          }}
+        />
       </View>
     </View>
   );

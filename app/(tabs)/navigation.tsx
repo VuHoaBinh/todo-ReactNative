@@ -1,5 +1,5 @@
-import { View } from "react-native";
+import CatagoriesScreen from "../../screens/CatagoriesScreen";
 
 export default function Navigation() {
-  return <View>Hello Navigation</View>;
+  return <CatagoriesScreen />;
 }

@@ -1,7 +1,7 @@
 import Category from "../model/category";
 import Meal from "../model/meal";
 
-export const CATEGORIES = [
+export const CATEGORIES: Category[] = [
   new Category("c1", "Italian", "#f5428d"),
   new Category("c2", "Quick & Easy", "#f54242"),
   new Category("c3", "Hamburgers", "#f5a442"),
@@ -14,7 +14,7 @@ export const CATEGORIES = [
   new Category("c10", "Summer", "#47fced"),
 ];
 
-export const MEALS = [
+export const MEALS: Meal[] = [
   new Meal(
     "m1",
     ["c1", "c2"],

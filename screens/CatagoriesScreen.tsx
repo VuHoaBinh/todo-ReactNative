@@ -1,28 +1,61 @@
 import React from "react";
-import { FlatList, Text, View, StyleSheet } from "react-native";
-import { CATEGORIES } from "@/app/data/dummy-data"; // Adjust the path as necessary
+import { FlatList, Text, View, StyleSheet, Pressable } from "react-native";
+import { CATEGORIES } from "@/app/data/dummy-data";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
+
+const CategoryList = () => {
+  return (
+    <FlatList
+      key={2}
+      data={CATEGORIES}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => {
+        return (
+          <View style={styles.gridItem}>
+            <Pressable>
+              <Text style={[styles.item, { backgroundColor: item.color }]}>
+                {item.title}
+              </Text>
+            </Pressable>
+          </View>
+        );
+      }}
+    />
+  );
+};
 
 export default function CategoriesScreen() {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Hello world</Text>
-      <FlatList
-        data={CATEGORIES}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return <Text style={styles.item}>{item.title}</Text>;
-        }}
-      />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Categories"
+            component={CategoryList}
+            options={{ title: "Categories" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 16,
+    width: "40%",
+    height: "40%",
+    borderRadius: 8,
+    elevation: 4, // shadow for Android
+  },
   screen: {
     flex: 1,
     padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
   title: {
     fontSize: 24,
@@ -30,11 +63,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   item: {
-    fontSize: 18,
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: "#ccc",
-    borderRadius: 5,
+    padding: 20,
     textAlign: "center",
+    fontWeight: "bold",
   },
 });

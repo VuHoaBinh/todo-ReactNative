@@ -1,4 +1,4 @@
-import { MEALS } from "@/app/data/dummy-data";
+import { MEALS, CATEGORIES } from "@/app/data/dummy-data";
 import {
   View,
   Text,
@@ -7,47 +7,58 @@ import {
   Pressable,
   Image,
   Platform,
+  ScrollView,
 } from "react-native";
 
-function MealOverviewScreen({ route }: any) {
+function MealOverviewScreen({ route, navigation }: any) {
   // valiable props must 'route'
   const catID = route.params.id;
 
   const filterIDinMeal = MEALS.filter((item) => {
     return item.categoryIds.indexOf(catID) >= 0;
   });
-  console.log(filterIDinMeal);
+
+  const filterCategory = CATEGORIES.find((item) => item.id === catID);
+
+  navigation.setOption({
+    title: filterCategory.title,
+  });
+
   return (
-    <View>
-      <Text style={styles.text}>This is meal overview screen</Text>
-      <FlatList
-        key={2}
-        data={filterIDinMeal}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <View style={styles.mealItem}>
-              <Pressable>
-                <View style={styles.container}>
-                  <View>
-                    <Image
-                      source={{ uri: item.imageUrl }}
-                      style={styles.image}
-                    />
-                    <Text style={styles.title}>{item.title}</Text>
+    <ScrollView>
+      <View>
+        <Text style={styles.text}>This is meal overview screen</Text>
+        <FlatList
+          key={2}
+          data={filterIDinMeal}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            return (
+              <View style={styles.mealItem}>
+                <Pressable>
+                  <View style={styles.container}>
+                    <View>
+                      <Image
+                        source={{ uri: item.imageUrl }}
+                        style={styles.image}
+                      />
+                      <Text style={styles.title}>{item.title}</Text>
+                    </View>
+                    <View style={styles.details}>
+                      <Text style={styles.detailItems}>{item.duration}</Text>
+                      <Text style={styles.detailItems}>{item.complexity}</Text>
+                      <Text style={styles.detailItems}>
+                        {item.affordability}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.details}>
-                    <Text style={styles.detailItems}>{item.duration}</Text>
-                    <Text style={styles.detailItems}>{item.complexity}</Text>
-                    <Text style={styles.detailItems}>{item.affordability}</Text>
-                  </View>
-                </View>
-              </Pressable>
-            </View>
-          );
-        }}
-      />
-    </View>
+                </Pressable>
+              </View>
+            );
+          }}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
@@ -55,10 +66,11 @@ export default MealOverviewScreen;
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 8,
+    borderRadius: 18,
     overflow: "hidden",
   },
   mealItem: {
+    borderRadius: 18,
     margin: 16,
     backgroundColor: "white",
     elevation: 4,
@@ -69,7 +81,7 @@ const styles = StyleSheet.create({
     overflow: Platform.OS === "android" ? "hidden" : "visible",
   },
   text: {
-    color: "red",
+    color: "white",
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 25,

@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 const CategoryList = ({ navigation }: any) => {
   return (
     <FlatList
-      key={2}
+      numColumns={2}
       data={CATEGORIES}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
@@ -21,6 +21,12 @@ const CategoryList = ({ navigation }: any) => {
                 console.log("a", item.id);
                 navigation.navigate("MealOverviewScreen", { id: item.id });
               }}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? "#dddddd" : item.color,
+                },
+                styles.pressable,
+              ]}
             >
               <Text style={[styles.item, { backgroundColor: item.color }]}>
                 {item.title}
@@ -36,14 +42,16 @@ const CategoryList = ({ navigation }: any) => {
 export default function CategoriesScreen() {
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>Hello world</Text>
       <NavigationContainer independent={true}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Categories"
-            component={CategoryList}
-            options={{ title: "Categories" }}
-          />
+        <Stack.Navigator
+          screenOptions={{
+            title: "Categories",
+            headerStyle: { backgroundColor: "#880000" },
+            headerTintColor: "white",
+            contentStyle: { backgroundColor: "#FF0000" },
+          }}
+        >
+          <Stack.Screen name="Categories" component={CategoryList} />
           <Stack.Screen
             name="MealOverviewScreen"
             component={MealOverviewScreen}
@@ -66,7 +74,6 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    padding: 20,
   },
   title: {
     fontSize: 24,
@@ -77,5 +84,11 @@ const styles = StyleSheet.create({
     padding: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  pressable: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 100,
   },
 });

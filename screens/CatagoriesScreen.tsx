@@ -3,10 +3,11 @@ import { FlatList, Text, View, StyleSheet, Pressable } from "react-native";
 import { CATEGORIES } from "@/app/data/dummy-data";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MealOverviewScreen from "./MealOverviewScreen";
 
 const Stack = createNativeStackNavigator();
 
-const CategoryList = () => {
+const CategoryList = ({ navigation }: any) => {
   return (
     <FlatList
       key={2}
@@ -15,7 +16,12 @@ const CategoryList = () => {
       renderItem={({ item }) => {
         return (
           <View style={styles.gridItem}>
-            <Pressable>
+            <Pressable
+              onPress={function handler() {
+                console.log("a", item.id);
+                navigation.navigate("MealOverviewScreen", { id: item.id });
+              }}
+            >
               <Text style={[styles.item, { backgroundColor: item.color }]}>
                 {item.title}
               </Text>
@@ -31,12 +37,17 @@ export default function CategoriesScreen() {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Hello world</Text>
-      <NavigationContainer>
+      <NavigationContainer independent={true}>
         <Stack.Navigator>
           <Stack.Screen
             name="Categories"
             component={CategoryList}
             options={{ title: "Categories" }}
+          />
+          <Stack.Screen
+            name="MealOverviewScreen"
+            component={MealOverviewScreen}
+            options={{ title: "Meal Overview Screen" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

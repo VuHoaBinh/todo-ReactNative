@@ -1,4 +1,5 @@
 import { MEALS, CATEGORIES } from "@/app/data/dummy-data";
+import { useEffect } from "react";
 import {
   View,
   Text,
@@ -18,16 +19,18 @@ function MealOverviewScreen({ route, navigation }: any) {
     return item.categoryIds.indexOf(catID) >= 0;
   });
 
-  const filterCategory = CATEGORIES.find((item) => item.id === catID);
+  useEffect(() => {
+    const filterCategory = CATEGORIES.find((item) => {
+      return item.id === catID;
+    });
 
-  navigation.setOption({
-    title: filterCategory.title,
-  });
-
+    navigation.setOptions({
+      title: filterCategory ? filterCategory.title : "Meals",
+    });
+  }, [navigation, catID]);
   return (
     <ScrollView>
       <View>
-        <Text style={styles.text}>This is meal overview screen</Text>
         <FlatList
           key={2}
           data={filterIDinMeal}
@@ -35,7 +38,12 @@ function MealOverviewScreen({ route, navigation }: any) {
           renderItem={({ item }) => {
             return (
               <View style={styles.mealItem}>
-                <Pressable>
+                <Pressable
+                  onPress={function handler() {
+                    console.log("a", item.title);
+                    navigation.navigate("DetailMeal", { id: item.title });
+                  }}
+                >
                   <View style={styles.container}>
                     <View>
                       <Image

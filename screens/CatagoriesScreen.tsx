@@ -12,7 +12,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealOverviewScreen from "./MealOverviewScreen";
 import DetailMeal from "./DetailMeal";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
+const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 const CategoryList = ({ navigation }: any) => {
@@ -50,7 +52,11 @@ export default function CategoriesScreen() {
   return (
     <View style={styles.screen}>
       <NavigationContainer independent={true}>
-        <Stack.Navigator
+        <Drawer.Navigator initialRouteName="User">
+          <Drawer.Screen name="Feed" component={CategoryList} />
+          <Drawer.Screen name="Article" component={CategoryList} />
+        </Drawer.Navigator>
+        {/* <Stack.Navigator
           screenOptions={{
             title: "Categories",
             headerStyle: { backgroundColor: "#880000" },
@@ -69,12 +75,9 @@ export default function CategoriesScreen() {
             component={DetailMeal}
             options={{
               title: "Detail Meal Screen",
-              headerRight: () => {
-                return <Button title="Tap me" />;
-              },
             }}
           />
-        </Stack.Navigator>
+        </Stack.Navigator> */}
       </NavigationContainer>
     </View>
   );

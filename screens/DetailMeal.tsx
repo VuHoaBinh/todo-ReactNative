@@ -1,4 +1,5 @@
 import { MEALS } from "@/app/data/dummy-data";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect } from "react";
 import { Image, Text, View, StyleSheet, ScrollView } from "react-native";
 
@@ -6,6 +7,9 @@ function DetailMeal({ route, navigation }: any) {
   const catID = route.params.id;
   const detailID = MEALS.find((item) => item.title === catID);
 
+  function handlerPressIconStar() {
+    console.log("press");
+  }
   useEffect(() => {
     if (detailID) {
       navigation.setOptions({
@@ -14,6 +18,16 @@ function DetailMeal({ route, navigation }: any) {
     } else {
       navigation.setOptions({
         title: "Meals",
+        headerLeft: () => {
+          return (
+            <Ionicons
+              icon="star"
+              color="white"
+              onPress={handlerPressIconStar}
+              style={({ press }: any) => press && styles.press}
+            />
+          );
+        },
       });
     }
   }, [navigation, detailID]);
@@ -61,6 +75,7 @@ function DetailMeal({ route, navigation }: any) {
 export default DetailMeal;
 
 const styles = StyleSheet.create({
+  press: { opacity: 0.3 },
   container: {
     // padding: 16,
   },

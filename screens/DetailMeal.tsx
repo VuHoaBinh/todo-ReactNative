@@ -1,15 +1,25 @@
 import { MEALS } from "@/app/data/dummy-data";
+import { FavoritesContext } from "@/store/context/Favorites-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Image, Text, View, StyleSheet, ScrollView } from "react-native";
 
 function DetailMeal({ route, navigation }: any) {
-  const catID = route.params.id;
-  const detailID = MEALS.find((item) => item.title === catID);
+  const catID = route.params.id; // name
+  const detailID = MEALS.find((item) => item.title === catID); // []
 
-  function handlerPressIconStar() {
-    console.log("press");
+  const FavoritesMealctx = useContext(FavoritesContext);
+
+  const isMealFavorite = FavoritesMealctx.ids.includes(catID);
+
+  function handlerChangeStateContext() {
+    if (isMealFavorite) {
+      FavoritesMealctx.removeFavorite(catID);
+    } else {
+      FavoritesMealctx.addFavorite(catID);
+    }
   }
+
   useEffect(() => {
     if (detailID) {
       navigation.setOptions({
@@ -17,10 +27,10 @@ function DetailMeal({ route, navigation }: any) {
         headerRight: () => {
           return (
             <Ionicons
-              name="star"
+              name={isMealFavorite ? "star" : "star-outline"}
               color="white"
-              size="large"
-              onPress={handlerPressIconStar}
+              size={24}
+              onPress={handlerChangeStateContext}
               style={({ press }: any) => press && styles.press}
             />
           );
@@ -32,16 +42,17 @@ function DetailMeal({ route, navigation }: any) {
         headerRight: () => {
           return (
             <Ionicons
-              name="star"
+              name={isMealFavorite ? "star" : "star-outline"}
               color="white"
-              onPress={handlerPressIconStar}
+              size={24}
+              onPress={handlerChangeStateContext}
               style={({ press }: any) => press && styles.press}
             />
           );
         },
       });
     }
-  }, [navigation, detailID, handlerPressIconStar]);
+  }, [navigation, detailID, handlerChangeStateContext, isMealFavorite]);
 
   if (!detailID) {
     return (

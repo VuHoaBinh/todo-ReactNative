@@ -14,14 +14,25 @@ function DetailMeal({ route, navigation }: any) {
     if (detailID) {
       navigation.setOptions({
         title: detailID.title,
+        headerRight: () => {
+          return (
+            <Ionicons
+              name="star"
+              color="white"
+              size="large"
+              onPress={handlerPressIconStar}
+              style={({ press }: any) => press && styles.press}
+            />
+          );
+        },
       });
     } else {
       navigation.setOptions({
         title: "Meals",
-        headerLeft: () => {
+        headerRight: () => {
           return (
             <Ionicons
-              icon="star"
+              name="star"
               color="white"
               onPress={handlerPressIconStar}
               style={({ press }: any) => press && styles.press}
@@ -30,7 +41,7 @@ function DetailMeal({ route, navigation }: any) {
         },
       });
     }
-  }, [navigation, detailID]);
+  }, [navigation, detailID, handlerPressIconStar]);
 
   if (!detailID) {
     return (
@@ -75,7 +86,7 @@ function DetailMeal({ route, navigation }: any) {
 export default DetailMeal;
 
 const styles = StyleSheet.create({
-  press: { opacity: 0.3 },
+  press: { opacity: 0.2 },
   container: {
     // padding: 16,
   },

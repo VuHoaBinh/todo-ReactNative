@@ -1,18 +1,14 @@
 import React from "react";
-import {
-  FlatList,
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  Button,
-} from "react-native";
+import { FlatList, Text, View, StyleSheet, Pressable } from "react-native";
 import { CATEGORIES } from "@/app/data/dummy-data";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealOverviewScreen from "./MealOverviewScreen";
 import DetailMeal from "./DetailMeal";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavoritesScreen from "./FavoritesScreen";
+import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -48,15 +44,48 @@ const CategoryList = ({ navigation }: any) => {
   );
 };
 
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#3f2f25" },
+        drawerContentStyle: { backgroundColor: "#351401" },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#351401",
+        drawerActiveBackgroundColor: "#e4baa1",
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoryList}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="list" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="star" color={color} size={size} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
 export default function CategoriesScreen() {
   return (
     <View style={styles.screen}>
+      <StatusBar style="light" />
       <NavigationContainer independent={true}>
-        <Drawer.Navigator initialRouteName="User">
-          <Drawer.Screen name="Feed" component={CategoryList} />
-          <Drawer.Screen name="Article" component={CategoryList} />
-        </Drawer.Navigator>
-        {/* <Stack.Navigator
+        <Stack.Navigator
           screenOptions={{
             title: "Categories",
             headerStyle: { backgroundColor: "#880000" },
@@ -64,6 +93,13 @@ export default function CategoriesScreen() {
             contentStyle: { backgroundColor: "#FF0000" },
           }}
         >
+          <Stack.Screen
+            name="DrawerNavigator"
+            component={DrawerNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen name="Categories" component={CategoryList} />
           <Stack.Screen
             name="MealOverviewScreen"
@@ -77,7 +113,7 @@ export default function CategoriesScreen() {
               title: "Detail Meal Screen",
             }}
           />
-        </Stack.Navigator> */}
+        </Stack.Navigator>
       </NavigationContainer>
     </View>
   );

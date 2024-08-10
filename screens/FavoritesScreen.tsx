@@ -11,12 +11,15 @@ import {
   Text,
   View,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 function FavoritesScreen() {
-  const FavoritesMealCtx = useContext(FavoritesContext);
-
+  // const FavoritesMealCtx = useContext(FavoritesContext);
+  const FavoritesMealRedux = useSelector(
+    (state: any) => state.FavoritesRedux.ids
+  );
   const filterIDMealFavorites = MEALS.filter((item) =>
-    FavoritesMealCtx.ids.includes(item.title)
+    FavoritesMealRedux.includes(item.title)
   );
   if (filterIDMealFavorites.length === 0) {
     return (

@@ -1,22 +1,29 @@
 import { MEALS } from "@/app/data/dummy-data";
-import { FavoritesContext } from "@/store/context/Favorites-context";
+import { addFavorite, removeFavorite } from "@/store/redux/reducer";
+// import { FavoritesContext } from "@/store/context/Favorites-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useContext, useEffect } from "react";
 import { Image, Text, View, StyleSheet, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 function DetailMeal({ route, navigation }: any) {
   const catID = route.params.id; // name
   const detailID = MEALS.find((item) => item.title === catID); // []
+  // const FavoritesMealctx = useContext(FavoritesContext);
+  const FavoritesMealRedux = useSelector(
+    (state: any) => state.FavoritesRedux.ids
+  ); // use state
+  const dispatch = useDispatch(); // sent state to redux
 
-  const FavoritesMealctx = useContext(FavoritesContext);
-
-  const isMealFavorite = FavoritesMealctx.ids.includes(catID);
+  const isMealFavorite = FavoritesMealRedux.includes(catID);
 
   function handlerChangeStateContext() {
     if (isMealFavorite) {
-      FavoritesMealctx.removeFavorite(catID);
+      // FavoritesMealRedux.removeFavorite(catID);
+      dispatch(removeFavorite({ id: catID }));
     } else {
-      FavoritesMealctx.addFavorite(catID);
+      // FavoritesMealRedux.addFavorite(catID);
+      dispatch(addFavorite({ id: catID }));
     }
   }
 

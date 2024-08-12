@@ -12,6 +12,7 @@ import { StatusBar } from "expo-status-bar";
 // import FavoritesContextProvider from "@/store/context/Favorites-context";
 import { Provider } from "react-redux";
 import { store } from "@/store/redux/store";
+import NewScreens from "./NewScreens";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -76,6 +77,15 @@ function DrawerNavigator() {
         options={{
           drawerIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="NewScreens"
+        component={NewScreens}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="laptop" color={color} size={size} />
           ),
         }}
       />

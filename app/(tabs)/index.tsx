@@ -2,10 +2,10 @@ import { Image, StyleSheet, View, Text, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import StartGameScreen from "@/screens/StartGameScreens";
+import StartGameScreen from "@/screens/game/StartGameScreens";
 import { useState } from "react";
-import GameScreen from "@/screens/GameScreen";
-import OverGameScreen from "@/screens/OverGameScreen";
+import GameScreen from "@/screens/game/GameScreen";
+import OverGameScreen from "@/screens/game/OverGameScreen";
 
 export default function HomeScreen() {
   const [inputNumber, setInputNumber] = useState();

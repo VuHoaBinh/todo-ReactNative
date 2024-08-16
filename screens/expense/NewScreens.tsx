@@ -8,6 +8,7 @@ import RecentExpenses from "./RecentExpense";
 import AllExpenses from "./AllExpense";
 import ManageExpense from "./ManagerExpense";
 import { useEffect } from "react";
+import IconButton from "@/IU/IconButton";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,6 +21,7 @@ function ExpensesOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: "#3e04c3" },
         tabBarActiveTintColor: "#f7bc0c",
+        headerRight: () => <IconButton icon="add" size={24} color="white" />,
       }}
     >
       <Tab.Screen

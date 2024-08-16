@@ -3,9 +3,15 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 function renderExpenseItem(itemData: any) {
   // const date = itemData.item.date.toLocaleDateString();
   const date = itemData.item.date;
-
+  function onClickExpenseItem() {
+    console.log("click expense item");
+    console.log(itemData.item);
+  }
   return (
-    <Pressable>
+    <Pressable
+      onPress={onClickExpenseItem}
+      style={({ pressed }) => pressed && styles.pressed}
+    >
       <View style={styles.expenseItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
@@ -38,6 +44,9 @@ function ExpensesList({ expenses }: any) {
 export default ExpensesList;
 
 const styles = StyleSheet.create({
+  pressed: {
+    opacity: 0.75,
+  },
   expenseItem: {
     padding: 12,
     marginVertical: 8,

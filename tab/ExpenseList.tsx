@@ -1,12 +1,18 @@
+// import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
 function renderExpenseItem(itemData: any) {
   // const date = itemData.item.date.toLocaleDateString();
-  const date = itemData.item.date;
+  const date = itemData?.item?.date ? new Date(itemData.item.date) : new Date();
+
+  // const navigation: any = useNavigation();
+
   function onClickExpenseItem() {
-    console.log("click expense item");
-    console.log(itemData.item);
+    // navigation.navigate("ManageExpense", {
+    //   expenseId: itemData.item.id,
+    // });
   }
+
   return (
     <Pressable
       onPress={onClickExpenseItem}

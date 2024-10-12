@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@expo/webpack-config": "~19.0.1",
+    "@react-native-community/checkbox": "^0.5.17",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.1.18",
